@@ -3,7 +3,7 @@
   "shortName": "MonarchNW",
   "longName": "Monarch Net Worth",
   "companyName": "Nick Pappas",
-  "versionLabel": "1.0.0",
+"versionLabel": "1.0",
   "versionCode": 1,
   "watchapp": {
     "watchface": false
@@ -15,7 +15,7 @@
     "emery"
   ],
   "sdkVersion": "3",
-  "enableMultiJS": false,
+"enableMultiJS": true,
   "appKeys": {
     "REQUEST_REFRESH": 0,
     "NET_WORTH_TEXT": 1,
