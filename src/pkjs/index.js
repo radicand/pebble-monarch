@@ -1,8 +1,8 @@
 const monarch = require('./monarch');
-const configPage = require('./config-page');
 
 const SETTINGS_KEY = 'monarch_settings_v1';
 const TOKEN_KEY = 'monarch_token_v1';
+const CONFIG_PAGE_BASE_URL = 'https://cdn.jsdelivr.net/gh/radicand/pebble-monarch@main/src/pkjs/config.html';
 
 let refreshTimer = null;
 
@@ -158,6 +158,12 @@ function scheduleRefresh() {
   console.log('Refresh scheduled every', minutes, 'minutes');
 }
 
+function buildHostedConfigUrl(settings) {
+  const email = encodeURIComponent(settings.email || '');
+  const refreshMinutes = encodeURIComponent(String(settings.refreshMinutes || 30));
+  return `${CONFIG_PAGE_BASE_URL}?email=${email}&refreshMinutes=${refreshMinutes}`;
+}
+
 Pebble.addEventListener('ready', () => {
   console.log('PebbleKit JS ready');
   scheduleRefresh();
@@ -166,7 +172,7 @@ Pebble.addEventListener('ready', () => {
 
 Pebble.addEventListener('showConfiguration', () => {
   const settings = loadSettings();
-  Pebble.openURL(configPage.buildConfigUrl(settings));
+  Pebble.openURL(buildHostedConfigUrl(settings));
 });
 
 Pebble.addEventListener('webviewclosed', (event) => {
@@ -175,6 +181,10 @@ Pebble.addEventListener('webviewclosed', (event) => {
   }
 
   if (!event.response) {
+    return;
+  }
+
+  if (event.response === 'CANCELLED') {
     return;
   }
 
