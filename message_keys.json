@@ -1,0 +1,7 @@
+{
+  "REQUEST_REFRESH": 0,
+  "NET_WORTH_TEXT": 1,
+  "UPDATED_TEXT": 2,
+  "STATUS_TEXT": 3,
+  "ERROR_TEXT": 4
+}

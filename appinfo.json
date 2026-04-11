@@ -1,0 +1,29 @@
+{
+  "uuid": "f9f97bc4-7666-4f1a-9db2-22f6f61a0ad9",
+  "shortName": "MonarchNW",
+  "longName": "Monarch Net Worth",
+  "companyName": "Nick Pappas",
+  "versionLabel": "1.0.0",
+  "versionCode": 1,
+  "watchapp": {
+    "watchface": false
+  },
+  "capabilities": [
+    "configurable"
+  ],
+  "targetPlatforms": [
+    "emery"
+  ],
+  "sdkVersion": "3",
+  "enableMultiJS": false,
+  "appKeys": {
+    "REQUEST_REFRESH": 0,
+    "NET_WORTH_TEXT": 1,
+    "UPDATED_TEXT": 2,
+    "STATUS_TEXT": 3,
+    "ERROR_TEXT": 4
+  },
+  "resources": {
+    "media": []
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "pebble-monarch-net-worth",
+  "author": "Nick Pappas",
+  "version": "1.0.0",
+  "keywords": [
+    "pebble-app"
+  ],
+  "private": true,
+  "description": "Pebble Time 2 app that displays current Monarch Money net worth",
+  "main": "src/pkjs/index.js",
+  "scripts": {
+    "build": "pebble build"
+  },
+  "dependencies": {},
+  "pebble": {
+    "displayName": "Monarch Net Worth",
+    "uuid": "f9f97bc4-7666-4f1a-9db2-22f6f61a0ad9",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "emery"
+    ],
+    "watchapp": {
+      "watchface": false
+    },
+    "messageKeys": [
+      "REQUEST_REFRESH",
+      "NET_WORTH_TEXT",
+      "UPDATED_TEXT",
+      "STATUS_TEXT",
+      "ERROR_TEXT"
+    ],
+    "resources": {
+      "media": []
+    }
+  }
+}

@@ -1,0 +1,21 @@
+# Pebble build artifacts
+build/
+.lock-waf_*
+
+# Node/npm
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env and local secrets
+.env
+.env.*
