@@ -94,6 +94,7 @@
 
     <div class="privacy">
       Credentials are stored in PebbleKit JS local storage on your phone and sent directly to Monarch API. They are never sent to the watch.
+      <br /><br /><small style="opacity:0.7"><strong>CloudPebble note:</strong> Settings are saved to browser localStorage, so they persist during your test session even if the pebblejs:// redirect fails.</small>
     </div>
 
     <div class="actions">
@@ -185,12 +186,20 @@
         return;
       }
 
-      closeWith({
+      var data = {
         email: email,
         password: password,
         mfaCode: mfaCode,
         refreshMinutes: refreshMinutes
-      });
+      };
+
+      try {
+        localStorage.setItem('monarch_settings_v1', JSON.stringify(data));
+      } catch (e) {
+        console.log('Failed to save to localStorage:', e.message);
+      }
+
+      closeWith(data);
     });
   </script>
 </body>
