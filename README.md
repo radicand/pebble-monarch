@@ -14,7 +14,7 @@ A Pebble watch app that shows your **current Monarch Money net worth** on a clea
 
 For CloudPebble compatibility, settings are loaded from a hosted HTTPS page:
 
-- `https://cdn.jsdelivr.net/gh/radicand/pebble-monarch@main/src/pkjs/config.html`
+- `https://htmlpreview.github.io/?https://raw.githubusercontent.com/radicand/pebble-monarch/main/src/pkjs/config.html`
 
 If you fork this repository, update `CONFIG_PAGE_BASE_URL` in `src/pkjs/index.js` to your own repo path so settings keep working from your fork.
 

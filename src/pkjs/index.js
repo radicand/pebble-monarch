@@ -2,7 +2,7 @@ const monarch = require('./monarch');
 
 const SETTINGS_KEY = 'monarch_settings_v1';
 const TOKEN_KEY = 'monarch_token_v1';
-const CONFIG_PAGE_BASE_URL = 'https://cdn.jsdelivr.net/gh/radicand/pebble-monarch@main/src/pkjs/config.html';
+const CONFIG_PAGE_BASE_URL = 'https://htmlpreview.github.io/?https://raw.githubusercontent.com/radicand/pebble-monarch/main/src/pkjs/config.html';
 
 let refreshTimer = null;
 
@@ -159,9 +159,7 @@ function scheduleRefresh() {
 }
 
 function buildHostedConfigUrl(settings) {
-  const email = encodeURIComponent(settings.email || '');
-  const refreshMinutes = encodeURIComponent(String(settings.refreshMinutes || 30));
-  return `${CONFIG_PAGE_BASE_URL}?email=${email}&refreshMinutes=${refreshMinutes}`;
+  return CONFIG_PAGE_BASE_URL;
 }
 
 Pebble.addEventListener('ready', () => {
