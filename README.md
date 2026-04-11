@@ -10,13 +10,18 @@ A Pebble watch app that shows your **current Monarch Money net worth** on a clea
 - Auto-refreshes every 30 minutes by default
 - Lets user configure Monarch credentials from Pebble settings
 
-## CloudPebble settings page note
+## CloudPebble settings page
 
 For CloudPebble compatibility, settings are loaded from a hosted HTTPS page:
 
-- `https://htmlpreview.github.io/?https://raw.githubusercontent.com/radicand/pebble-monarch/main/src/pkjs/config.html`
+- Primary: `https://htmlpreview.github.io/?https://raw.githubusercontent.com/radicand/pebble-monarch/main/src/pkjs/config.html`
 
-If you fork this repository, update `CONFIG_PAGE_BASE_URL` in `src/pkjs/index.js` to your own repo path so settings keep working from your fork.
+### Testing in CloudPebble:
+
+- **Desktop CloudPebble**: Settings form renders, but since the `pebblejs://close` scheme has no handler in the browser, saving shows a **debug overlay** with the JSON payload and a copy-to-clipboard button (for reference/testing only).
+- **Mobile Rebble app**: The `pebblejs://close#<json>` redirect works normally, and settings are processed and saved on the watch.
+
+If you fork this repository, update `CONFIG_PAGE_BASE_URL` in `src/pkjs/index.js` to point to your own GitHub repo URL.
 
 ## Security model (v1)
 

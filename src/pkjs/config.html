@@ -103,6 +103,8 @@
   </div>
 
   <script>
+    var cloudPebbleMode = false;
+
     function parseParams() {
       var out = {};
       var query = globalThis.location.search || '';
@@ -128,7 +130,27 @@
     }
 
     function closeWith(data) {
-      document.location = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(data || {}));
+      if (cloudPebbleMode) {
+        showCloudPebbleOverlay(data);
+      } else {
+        document.location = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(data || {}));
+      }
+    }
+
+    function showCloudPebbleOverlay(data) {
+      var payload = JSON.stringify(data, null, 2);
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999';
+      var card = document.createElement('div');
+      card.style.cssText = 'background:white;padding:20px;border-radius:10px;max-width:500px;max-height:80vh;overflow:auto';
+      card.innerHTML = '<h3>CloudPebble Mode: Settings Saved Locally</h3>' +
+        '<p style="font-size:12px;color:#666">In CloudPebble dev environment, the pebblejs:// scheme is not available.</p>' +
+        '<p style="font-size:12px;color:#666"><strong>Testing note:</strong> In a real Rebble mobile app, this settings payload would be sent to your watchapp. For now, settings are stored in localStorage.</p>' +
+        '<label style="display:block;margin-top:12px;font-weight:600">Settings payload (for reference):</label>' +
+        '<textarea readonly style="width:100%;height:150px;padding:8px;border:1px solid #ccc;border-radius:6px;font-family:monospace;font-size:12px">' + payload + '</textarea>' +
+        '<button style="display:block;margin-top:12px;width:100%;padding:10px;background:#0369a1;color:white;border:0;border-radius:6px" onclick="var el=this.parentNode.querySelector(' + "'" + 'textarea' + "'" + ');el.select();document.execCommand(' + "'" + 'copy' + "'" + ');this.textContent=' + "'" + 'Copied!' + "'" + ';setTimeout(function(){parent.history.back()},500)">Copy & Close</button>';
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
     }
 
     (function prefill() {
@@ -139,6 +161,8 @@
       if (params.refreshMinutes) {
         document.getElementById('refreshMinutes').value = params.refreshMinutes;
       }
+
+      cloudPebbleMode = globalThis.location.href && globalThis.location.href.includes('htmlpreview.github.io');
     })();
 
     document.getElementById('cancel').addEventListener('click', function() {
