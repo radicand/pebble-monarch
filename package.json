@@ -11,7 +11,9 @@
   "scripts": {
     "build": "pebble build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@rebble/clay": "^1.0.8"
+  },
   "pebble": {
     "displayName": "Monarch Net Worth",
     "uuid": "f9f97bc4-7666-4f1a-9db2-22f6f61a0ad9",
@@ -25,10 +27,10 @@
     },
     "messageKeys": [
       "REQUEST_REFRESH",
-      "NET_WORTH_TEXT",
-      "UPDATED_TEXT",
-      "STATUS_TEXT",
-      "ERROR_TEXT"
+      "EMAIL",
+      "PASSWORD",
+      "MFA_CODE",
+      "REFRESH_MINUTES"
     ],
     "resources": {
       "media": []

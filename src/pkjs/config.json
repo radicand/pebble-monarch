@@ -1,0 +1,75 @@
+[
+  {
+    "type": "heading",
+    "defaultValue": "Monarch Net Worth"
+  },
+  {
+    "type": "text",
+    "defaultValue": "Enter your Monarch credentials so your watch can fetch your net worth."
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Account"
+      },
+      {
+        "type": "input",
+        "messageKey": "EMAIL",
+        "label": "Email",
+        "defaultValue": "",
+        "attributes": {
+          "type": "email",
+          "placeholder": "you@example.com"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "PASSWORD",
+        "label": "Password",
+        "defaultValue": "",
+        "attributes": {
+          "type": "password",
+          "placeholder": "Your Monarch password"
+        }
+      },
+      {
+        "type": "input",
+        "messageKey": "MFA_CODE",
+        "label": "MFA Code (optional)",
+        "defaultValue": "",
+        "attributes": {
+          "type": "text",
+          "placeholder": "Current 6-digit code if required"
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Refresh"
+      },
+      {
+        "type": "slider",
+        "messageKey": "REFRESH_MINUTES",
+        "label": "Auto-refresh (minutes)",
+        "defaultValue": 30,
+        "min": 5,
+        "max": 120,
+        "step": 5
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "defaultValue": "<small>Credentials are stored on your phone and sent directly to Monarch's API. They are never sent to the watch.</small>"
+  },
+  {
+    "type": "submit",
+    "defaultValue": "Save"
+  }
+]

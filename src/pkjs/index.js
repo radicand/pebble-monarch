@@ -1,8 +1,10 @@
+const Clay = require('@rebble/clay');
+const clayConfig = require('./config.json');
 const monarch = require('./monarch');
 
 const SETTINGS_KEY = 'monarch_settings_v1';
 const TOKEN_KEY = 'monarch_token_v1';
-const CONFIG_PAGE_BASE_URL = 'https://htmlpreview.github.io/?https://raw.githubusercontent.com/radicand/pebble-monarch/main/src/pkjs/config.html';
+const clay = new Clay(clayConfig);
 
 let refreshTimer = null;
 
@@ -168,11 +170,6 @@ Pebble.addEventListener('ready', () => {
   refreshNetWorth('startup');
 });
 
-Pebble.addEventListener('showConfiguration', () => {
-  const settings = loadSettings();
-  Pebble.openURL(buildHostedConfigUrl(settings));
-});
-
 Pebble.addEventListener('webviewclosed', (event) => {
   if (!event) {
     return;
@@ -182,40 +179,30 @@ Pebble.addEventListener('webviewclosed', (event) => {
     return;
   }
 
-  if (event.response === 'CANCELLED') {
-    return;
-  }
-
-  let parsed;
   try {
-    parsed = JSON.parse(decodeURIComponent(event.response));
+    const claySettings = clay.getSettings(event.response);
+    const messageKeys = require('message_keys');
+
+    const settings = {
+      email: claySettings[messageKeys.EMAIL] || '',
+      password: claySettings[messageKeys.PASSWORD] || '',
+      mfaCode: claySettings[messageKeys.MFA_CODE] || '',
+      refreshMinutes: Number(claySettings[messageKeys.REFRESH_MINUTES] || 30)
+    };
+
+    if (!settings.email || !settings.password) {
+      toWatch({ STATUS_TEXT: 'Error', ERROR_TEXT: 'Email and password required' });
+      return;
+    }
+
+    saveSettings(settings);
+    clearToken();
+    scheduleRefresh();
+    refreshNetWorth('config');
   } catch (error) {
-    console.log('Invalid config response:', error.message);
-    toWatch({ STATUS_TEXT: 'Error', ERROR_TEXT: 'Bad config data' });
-    return;
+    console.log('Error processing config:', error.message);
+    toWatch({ STATUS_TEXT: 'Error', ERROR_TEXT: 'Config error' });
   }
-
-  if (parsed.cancelled) {
-    return;
-  }
-
-  const current = loadSettings();
-  const merged = {
-    email: parsed.email || current.email || '',
-    password: parsed.password || current.password || '',
-    mfaCode: parsed.mfaCode || '',
-    refreshMinutes: Number(parsed.refreshMinutes || current.refreshMinutes || 30)
-  };
-
-  if (!merged.email || !merged.password) {
-    toWatch({ STATUS_TEXT: 'Error', ERROR_TEXT: 'Email and password required' });
-    return;
-  }
-
-  saveSettings(merged);
-  clearToken();
-  scheduleRefresh();
-  refreshNetWorth('config');
 });
 
 Pebble.addEventListener('appmessage', (event) => {
