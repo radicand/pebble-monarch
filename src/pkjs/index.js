@@ -160,10 +160,6 @@ function scheduleRefresh() {
   console.log('Refresh scheduled every', minutes, 'minutes');
 }
 
-function buildHostedConfigUrl(settings) {
-  return CONFIG_PAGE_BASE_URL;
-}
-
 Pebble.addEventListener('ready', () => {
   console.log('PebbleKit JS ready');
   scheduleRefresh();
