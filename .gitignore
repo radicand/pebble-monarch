@@ -2,11 +2,8 @@
 build/
 .lock-waf_*
 
-# Node/npm — allow @rebble/clay through for CloudPebble compatibility
-node_modules/*
-!node_modules/@rebble/
-node_modules/@rebble/*
-!node_modules/@rebble/clay/
+# Node/npm
+node_modules
 npm-debug.log*
 
 # macOS

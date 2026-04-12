@@ -1,4 +1,4 @@
-const API_BASE = 'https://api.monarchmoney.com';
+const API_BASE = 'https://api.monarch.com';
 
 function jsonOrEmpty(response) {
   return response
