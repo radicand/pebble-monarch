@@ -11,9 +11,6 @@
   "scripts": {
     "build": "pebble build"
   },
-  "dependencies": {
-    "@rebble/clay": "^1.0.8"
-  },
   "pebble": {
     "displayName": "Monarch Net Worth",
     "uuid": "f9f97bc4-7666-4f1a-9db2-22f6f61a0ad9",
@@ -35,5 +32,8 @@
     "resources": {
       "media": []
     }
+  },
+  "dependencies": {
+    "@rebble/clay": "^1.0.8"
   }
 }
