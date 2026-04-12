@@ -4,7 +4,7 @@ const monarch = require('./monarch');
 
 const SETTINGS_KEY = 'monarch_settings_v1';
 const TOKEN_KEY = 'monarch_token_v1';
-const clay = new Clay(clayConfig);
+const clay = new Clay(clayConfig, null, { autoHandleEvents: false });
 
 let refreshTimer = null;
 
@@ -164,6 +164,10 @@ Pebble.addEventListener('ready', () => {
   console.log('PebbleKit JS ready');
   scheduleRefresh();
   refreshNetWorth('startup');
+});
+
+Pebble.addEventListener('showConfiguration', () => {
+  Pebble.openURL(clay.generateUrl());
 });
 
 Pebble.addEventListener('webviewclosed', (event) => {

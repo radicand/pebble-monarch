@@ -21,7 +21,11 @@
     "NET_WORTH_TEXT": 1,
     "UPDATED_TEXT": 2,
     "STATUS_TEXT": 3,
-    "ERROR_TEXT": 4
+    "ERROR_TEXT": 4,
+    "EMAIL": 5,
+    "PASSWORD": 6,
+    "MFA_CODE": 7,
+    "REFRESH_MINUTES": 8
   },
   "resources": {
     "media": []

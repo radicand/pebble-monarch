@@ -19,11 +19,18 @@
     "targetPlatforms": [
       "emery"
     ],
+    "capabilities": [
+      "configurable"
+    ],
     "watchapp": {
       "watchface": false
     },
     "messageKeys": [
       "REQUEST_REFRESH",
+      "NET_WORTH_TEXT",
+      "UPDATED_TEXT",
+      "STATUS_TEXT",
+      "ERROR_TEXT",
       "EMAIL",
       "PASSWORD",
       "MFA_CODE",
