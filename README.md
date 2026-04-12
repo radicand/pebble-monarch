@@ -16,7 +16,7 @@ Settings are managed using [Clay](https://github.com/pebble-dev/clay), the stand
 
 When users open Settings in the Pebble app:
 1. A Clay-generated page displays in the webview
-2. Users enter email, password, optional MFA code, and refresh interval
+2. Users enter email, password, required OTP seed, and refresh interval
 3. Clay automatically handles `showConfiguration` and `webviewclosed` events
 4. Settings are transmitted to the watch via AppMessage and stored in localStorage on the phone
 
@@ -24,7 +24,7 @@ When users open Settings in the Pebble app:
 
 - **Email**: Monarch login email
 - **Password**: Monarch password  
-- **MFA Code** (optional): 6-digit code if your Monarch account requires it
+- **OTP Seed** (required): Base32 TOTP seed or full `otpauth://` URL from your authenticator setup; the phone companion generates the current 6-digit code automatically
 - **Auto-refresh** (minutes): 5–120 minute polling interval for net worth updates
 
 ## Security model (v1)
@@ -43,7 +43,7 @@ This v1 stores credentials in PebbleKit JS local storage on your phone and calls
 4. In the Pebble mobile app, open app settings and enter:
    - Monarch email
    - Monarch password
-   - Optional current MFA code
+   - Required OTP seed or `otpauth://` URL
    - Refresh interval (5–120 min)
 
 ## Usage
@@ -72,7 +72,7 @@ Defined in `appinfo.json` and `message_keys.json`:
 ## Troubleshooting
 
 - **Auth failed**: verify email/password and that account supports password login
-- **MFA code required**: enter a current MFA code in settings and save again
+- **OTP seed required**: enter the Base32 seed or `otpauth://` URL from your authenticator setup and save again
 - **Network error**: check mobile internet connectivity
 - **No data**: account may not have aggregate snapshots yet; retry later
 

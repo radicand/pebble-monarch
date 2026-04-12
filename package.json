@@ -33,7 +33,7 @@
       "ERROR_TEXT",
       "EMAIL",
       "PASSWORD",
-      "MFA_CODE",
+      "OTP_SEED",
       "REFRESH_MINUTES"
     ],
     "resources": {

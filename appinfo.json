@@ -24,7 +24,7 @@
     "ERROR_TEXT": 4,
     "EMAIL": 5,
     "PASSWORD": 6,
-    "MFA_CODE": 7,
+    "OTP_SEED": 7,
     "REFRESH_MINUTES": 8
   },
   "resources": {

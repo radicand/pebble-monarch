@@ -40,7 +40,7 @@ function configured(settings) {
   if (!settings) {
     return false;
   }
-  return Boolean(settings.email && settings.password);
+  return Boolean(settings.email && settings.password && settings.otpSeed);
 }
 
 function toWatch(payload) {
@@ -73,7 +73,7 @@ function normalizeWatchError(error) {
 
   switch (error.code) {
     case 'MFA_REQUIRED':
-      return 'MFA code required';
+      return 'OTP seed required';
     case 'AUTH_FAILED':
       return 'Auth failed';
     case 'AUTH_EXPIRED':
@@ -186,12 +186,12 @@ Pebble.addEventListener('webviewclosed', (event) => {
     const settings = {
       email: claySettings[messageKeys.EMAIL] || '',
       password: claySettings[messageKeys.PASSWORD] || '',
-      mfaCode: claySettings[messageKeys.MFA_CODE] || '',
+      otpSeed: monarch.normalizeOtpSeed(claySettings[messageKeys.OTP_SEED] || ''),
       refreshMinutes: Number(claySettings[messageKeys.REFRESH_MINUTES] || 30)
     };
 
-    if (!settings.email || !settings.password) {
-      toWatch({ STATUS_TEXT: 'Error', ERROR_TEXT: 'Email and password required' });
+    if (!settings.email || !settings.password || !settings.otpSeed) {
+      toWatch({ STATUS_TEXT: 'Error', ERROR_TEXT: 'Email, password, and OTP seed required' });
       return;
     }
 

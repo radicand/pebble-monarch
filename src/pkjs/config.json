@@ -36,12 +36,12 @@
       },
       {
         "type": "input",
-        "messageKey": "MFA_CODE",
-        "label": "MFA Code (optional)",
+        "messageKey": "OTP_SEED",
+        "label": "OTP Seed",
         "defaultValue": "",
         "attributes": {
           "type": "text",
-          "placeholder": "Current 6-digit code if required"
+          "placeholder": "Base32 seed or otpauth:// URL"
         }
       }
     ]
@@ -66,7 +66,7 @@
   },
   {
     "type": "text",
-    "defaultValue": "<small>Credentials are stored on your phone and sent directly to Monarch's API. They are never sent to the watch.</small>"
+    "defaultValue": "<small>Credentials and OTP seed are stored on your phone and sent directly to Monarch's API. You can paste either the raw Base32 seed or a full otpauth:// URL from your authenticator setup.</small>"
   },
   {
     "type": "submit",
