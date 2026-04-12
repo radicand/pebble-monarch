@@ -1,4 +1,17 @@
 const API_BASE = 'https://api.monarch.com';
+const DEVICE_UUID_KEY = 'monarch_device_uuid';
+
+function getDeviceUUID() {
+  var uuid = localStorage.getItem(DEVICE_UUID_KEY);
+  if (!uuid) {
+    uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    localStorage.setItem(DEVICE_UUID_KEY, uuid);
+  }
+  return uuid;
+}
 
 function jsonOrEmpty(response) {
   return response
@@ -35,7 +48,8 @@ function login(credentials) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Client-Platform': 'web'
+      'Client-Platform': 'web',
+      'Device-UUID': getDeviceUUID()
     },
     body: JSON.stringify(body)
   }).then((response) => {
@@ -71,6 +85,7 @@ function graphql(token, operationName, query, variables) {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Client-Platform': 'web',
+      'Device-UUID': getDeviceUUID(),
       'Authorization': `Token ${token}`
     },
     body: JSON.stringify({
