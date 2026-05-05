@@ -57,6 +57,39 @@ function pad2(value) {
   return value < 10 ? `0${value}` : `${value}`;
 }
 
+/** Maps legacy 5–120 minute slider to 8–24 h in steps of 8. */
+function legacyMinutesToRefreshHours(minutes) {
+  const m = Number(minutes);
+  if (!Number.isFinite(m)) {
+    return 24;
+  }
+  const asHours = m / 60;
+  let stepped = Math.round(asHours / 8) * 8;
+  if (stepped === 0) {
+    stepped = 8;
+  }
+  return Math.max(8, Math.min(24, stepped));
+}
+
+function normalizeRefreshHours(value) {
+  let hours = Number(value);
+  if (!Number.isFinite(hours)) {
+    hours = 24;
+  }
+  hours = Math.round(hours / 8) * 8;
+  return Math.max(8, Math.min(24, hours));
+}
+
+function effectiveRefreshHours(settings) {
+  if (settings && settings.refreshHours !== undefined && settings.refreshHours !== null) {
+    return normalizeRefreshHours(settings.refreshHours);
+  }
+  if (settings && settings.refreshMinutes !== undefined) {
+    return legacyMinutesToRefreshHours(settings.refreshMinutes);
+  }
+  return 24;
+}
+
 function updatedTimeText() {
   const now = new Date();
   return `Updated ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
@@ -150,14 +183,14 @@ function scheduleRefresh() {
   }
 
   const settings = loadSettings();
-  const minutes = Math.max(5, Math.min(120, Number(settings.refreshMinutes || 30)));
-  const intervalMs = minutes * 60 * 1000;
+  const hours = effectiveRefreshHours(settings);
+  const intervalMs = hours * 60 * 60 * 1000;
 
   refreshTimer = setInterval(() => {
     refreshNetWorth('auto');
   }, intervalMs);
 
-  console.log('Refresh scheduled every', minutes, 'minutes');
+  console.log('Refresh scheduled every', hours, 'hours');
 }
 
 Pebble.addEventListener('ready', () => {
@@ -183,11 +216,17 @@ Pebble.addEventListener('webviewclosed', (event) => {
     const claySettings = clay.getSettings(event.response);
     const messageKeys = require('message_keys');
 
+    const rawHours = claySettings[messageKeys.REFRESH_HOURS];
+    const refreshHours =
+      rawHours !== undefined && rawHours !== null && rawHours !== ''
+        ? normalizeRefreshHours(rawHours)
+        : legacyMinutesToRefreshHours(claySettings[messageKeys.REFRESH_MINUTES]);
+
     const settings = {
       email: claySettings[messageKeys.EMAIL] || '',
       password: claySettings[messageKeys.PASSWORD] || '',
       otpSeed: monarch.normalizeOtpSeed(claySettings[messageKeys.OTP_SEED] || ''),
-      refreshMinutes: Number(claySettings[messageKeys.REFRESH_MINUTES] || 30)
+      refreshHours
     };
 
     if (!settings.email || !settings.password || !settings.otpSeed) {

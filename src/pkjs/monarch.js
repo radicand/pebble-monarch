@@ -356,8 +356,35 @@ function formatCurrency(amount) {
   const numeric = Number(amount || 0);
   const isNegative = numeric < 0;
   const absolute = Math.abs(numeric);
-  const formatted = absolute.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return `${isNegative ? '-' : ''}$${formatted}`;
+
+  const divs = [1, 1e3, 1e6, 1e9];
+  const sufs = ['', 'K', 'M', 'B'];
+
+  let tier = 0;
+  if (absolute >= 1e9) {
+    tier = 3;
+  } else if (absolute >= 1e6) {
+    tier = 2;
+  } else if (absolute >= 1e3) {
+    tier = 1;
+  }
+
+  while (tier > 0 && tier < 3) {
+    const scaled = absolute / divs[tier];
+    if (Number(scaled.toFixed(2)) >= 1000) {
+      tier += 1;
+    } else {
+      break;
+    }
+  }
+
+  const scaled = absolute / divs[tier];
+  const suffix = sufs[tier];
+  const body = suffix
+    ? `${scaled.toFixed(2)}${suffix}`
+    : scaled.toFixed(0);
+
+  return `${isNegative ? '-' : ''}$${body}`;
 }
 
 module.exports = {
