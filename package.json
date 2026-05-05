@@ -34,7 +34,8 @@
       "EMAIL",
       "PASSWORD",
       "OTP_SEED",
-      "REFRESH_MINUTES"
+      "REFRESH_MINUTES",
+      "REFRESH_HOURS"
     ],
     "resources": {
       "media": []

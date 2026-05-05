@@ -55,12 +55,12 @@
       },
       {
         "type": "slider",
-        "messageKey": "REFRESH_MINUTES",
-        "label": "Auto-refresh (minutes)",
-        "defaultValue": 30,
-        "min": 5,
-        "max": 120,
-        "step": 5
+        "messageKey": "REFRESH_HOURS",
+        "label": "Auto-refresh (hours)",
+        "defaultValue": 12,
+        "min": 6,
+        "max": 24,
+        "step": 4
       }
     ]
   },
