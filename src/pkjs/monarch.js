@@ -357,21 +357,29 @@ function formatCurrency(amount) {
   const isNegative = numeric < 0;
   const absolute = Math.abs(numeric);
 
-  let scaled;
-  let suffix = '';
+  const divs = [1, 1e3, 1e6, 1e9];
+  const sufs = ['', 'K', 'M', 'B'];
+
+  let tier = 0;
   if (absolute >= 1e9) {
-    scaled = absolute / 1e9;
-    suffix = 'B';
+    tier = 3;
   } else if (absolute >= 1e6) {
-    scaled = absolute / 1e6;
-    suffix = 'M';
+    tier = 2;
   } else if (absolute >= 1e3) {
-    scaled = absolute / 1e3;
-    suffix = 'K';
-  } else {
-    scaled = absolute;
+    tier = 1;
   }
 
+  while (tier > 0 && tier < 3) {
+    const scaled = absolute / divs[tier];
+    if (Number(scaled.toFixed(2)) >= 1000) {
+      tier += 1;
+    } else {
+      break;
+    }
+  }
+
+  const scaled = absolute / divs[tier];
+  const suffix = sufs[tier];
   const body = suffix
     ? `${scaled.toFixed(2)}${suffix}`
     : scaled.toFixed(0);

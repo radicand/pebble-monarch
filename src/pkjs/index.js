@@ -57,26 +57,27 @@ function pad2(value) {
   return value < 10 ? `0${value}` : `${value}`;
 }
 
-/** Maps legacy 5–120 minute slider to 6–24 h in steps of 4. */
+/** Maps legacy 5–120 minute slider to 8–24 h in steps of 8. */
 function legacyMinutesToRefreshHours(minutes) {
   const m = Number(minutes);
   if (!Number.isFinite(m)) {
-    return 12;
+    return 24;
   }
-  const stepped = Math.round(m / 60 / 4) * 4;
+  const asHours = m / 60;
+  let stepped = Math.round(asHours / 8) * 8;
   if (stepped === 0) {
-    return 6;
+    stepped = 8;
   }
-  return Math.max(6, Math.min(24, stepped));
+  return Math.max(8, Math.min(24, stepped));
 }
 
 function normalizeRefreshHours(value) {
   let hours = Number(value);
   if (!Number.isFinite(hours)) {
-    hours = 12;
+    hours = 24;
   }
-  hours = Math.round(hours / 4) * 4;
-  return Math.max(6, Math.min(24, hours));
+  hours = Math.round(hours / 8) * 8;
+  return Math.max(8, Math.min(24, hours));
 }
 
 function effectiveRefreshHours(settings) {
@@ -86,7 +87,7 @@ function effectiveRefreshHours(settings) {
   if (settings && settings.refreshMinutes !== undefined) {
     return legacyMinutesToRefreshHours(settings.refreshMinutes);
   }
-  return 12;
+  return 24;
 }
 
 function updatedTimeText() {
