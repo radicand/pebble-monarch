@@ -42,6 +42,6 @@
     }
   },
   "dependencies": {
-    "@rebble/clay": "^1.0.8"
+    "@rebble/clay": "^1.0.10"
   }
 }
